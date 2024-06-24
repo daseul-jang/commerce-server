@@ -25,4 +25,9 @@ public class ItemProductEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", columnDefinition = "BIGINT", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private ProductEntity product;
+
+    public void addItem(ItemEntity item) {
+        this.item = item;
+        item.getProducts().add(this);
+    }
 }
