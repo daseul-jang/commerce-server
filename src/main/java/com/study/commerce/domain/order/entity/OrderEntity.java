@@ -1,5 +1,6 @@
 package com.study.commerce.domain.order.entity;
 
+import com.study.commerce.domain.order.dto.OrderRequest;
 import com.study.commerce.global.entity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -38,7 +39,7 @@ public class OrderEntity extends BaseEntity {
 
     private String deliveryRequest;
 
-    private BigDecimal totalPrice;
+    private BigDecimal totalItemPrice;
 
     private BigDecimal deliveryPrice;
 
@@ -53,5 +54,25 @@ public class OrderEntity extends BaseEntity {
 
         // 타임스탬프와 랜덤 숫자 결합
         return timestamp + endNumber;
+    }
+
+    public static OrderEntity createOrder(OrderRequest request) {
+        return OrderEntity.builder()
+                .orderNo(generateOrderNo(request.getOrdererPhone()))
+                .ordererName(request.getOrdererName())
+                .ordererPhone(request.getOrdererPhone())
+                .receiverName(request.getReceiverName())
+                .receiverPhone(request.getReceiverPhone())
+                .receiverAddress(request.getReceiverAddress())
+                .receiverAddressDetail(request.getReceiverAddressDetail())
+                .receiverPostcode(request.getReceiverPostcode())
+                .deliveryRequest(request.getDeliveryRequest())
+                .totalItemPrice(BigDecimal.ZERO)
+                .deliveryPrice(BigDecimal.valueOf(3000))
+                .build();
+    }
+
+    public void addTotalItemPrice(BigDecimal itemPrice) {
+        this.totalItemPrice = this.totalItemPrice.add(itemPrice);
     }
 }

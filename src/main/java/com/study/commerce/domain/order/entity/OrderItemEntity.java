@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "order_item")
 public class OrderItemEntity extends BaseEntity {
+    private Long itemId;
+
     private String title;
 
     private BigDecimal price;
