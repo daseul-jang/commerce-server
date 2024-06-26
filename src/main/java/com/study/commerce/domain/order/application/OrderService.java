@@ -56,9 +56,10 @@ public class OrderService {
 
                 findProduct.verifyName(requestProduct.getName());
                 findProduct.verifyStock(requestProduct.getQuantity() * requestItem.getQuantity());
-                findProduct.minusStock(requestProduct.getQuantity() * requestItem.getQuantity());
 
                 orderProductRepository.save(findProduct.createOrderProduct(orderItem, requestProduct.getQuantity()));
+
+                findProduct.minusStock(requestProduct.getQuantity() * requestItem.getQuantity());
             });
 
             order.addTotalItemPrice(findItem.calculatePrice(requestItem.getQuantity()));
