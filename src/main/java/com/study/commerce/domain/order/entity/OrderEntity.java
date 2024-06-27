@@ -43,19 +43,6 @@ public class OrderEntity extends BaseEntity {
 
     private BigDecimal deliveryPrice;
 
-    private static String generateOrderNo(String ordererPhone) {
-        int index = ordererPhone.length() - 4;
-        String endNumber = ordererPhone.substring(index);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-
-        // 현재 시간을 기반으로 한 타임스탬프 생성
-        String timestamp = dateFormat.format(new Date());
-
-        // 타임스탬프와 랜덤 숫자 결합
-        return timestamp + endNumber;
-    }
-
     public static OrderEntity createOrder(OrderRequest request) {
         return OrderEntity.builder()
                 .orderNo(generateOrderNo(request.getOrdererPhone()))
@@ -70,6 +57,16 @@ public class OrderEntity extends BaseEntity {
                 .totalItemPrice(BigDecimal.ZERO)
                 .deliveryPrice(BigDecimal.valueOf(3000))
                 .build();
+    }
+
+    private static String generateOrderNo(String ordererPhone) {
+        int index = ordererPhone.length() - 4;
+        String endNumber = ordererPhone.substring(index);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = dateFormat.format(new Date());
+
+        return timestamp + endNumber;
     }
 
     public void addTotalItemPrice(BigDecimal itemPrice) {
