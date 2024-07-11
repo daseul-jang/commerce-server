@@ -5,7 +5,9 @@ import com.study.commerce.domain.item.entity.ItemEntity;
 import com.study.commerce.domain.order.dao.OrderItemRepository;
 import com.study.commerce.domain.order.dao.OrderProductRepository;
 import com.study.commerce.domain.order.dao.OrderRepository;
-import com.study.commerce.domain.order.dto.*;
+import com.study.commerce.domain.order.dto.OrderRequest;
+import com.study.commerce.domain.order.dto.OrderResponse;
+import com.study.commerce.domain.order.dto.OrderSimpleItemResponse;
 import com.study.commerce.domain.order.entity.OrderEntity;
 import com.study.commerce.domain.order.entity.OrderItemEntity;
 import com.study.commerce.domain.product.dao.ProductRepository;
@@ -51,7 +53,7 @@ public class OrderService {
                     itemProduct.verifyQuantity(requestProduct.getQuantity());
                 });
 
-                ProductEntity findProduct = productRepository.findByIdAndDeletedAtIsNull(requestProduct.getId())
+                ProductEntity findProduct = productRepository.findByIdAndDeletedAtIsNullForUpdate(requestProduct.getId())
                         .orElseThrow(() -> new BusinessException(HttpStatus.NOT_FOUND, "제품이 존재하지 않습니다."));
 
                 findProduct.verifyName(requestProduct.getName());
