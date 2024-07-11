@@ -49,7 +49,7 @@ public class ItemEntity extends BaseEntity {
     }
 
     public void verifyPrice(BigDecimal price) {
-        if (!this.price.equals(price)) {
+        if (this.price.compareTo(price) != 0) {
             throw new BusinessException(HttpStatus.BAD_REQUEST, "상품 가격이 일치하지 않습니다.");
         }
     }
