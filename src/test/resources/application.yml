@@ -1,8 +1,8 @@
 spring:
   profiles:
-    active: local
+    active: test
     group:
-      local:
+      test:
         - secret
 logging:
   level:
